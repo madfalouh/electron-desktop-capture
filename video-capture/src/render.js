@@ -9,8 +9,21 @@ const recordedChunks = [];
 // Buttons
 const videoElement = document.querySelector('video');
 
+ 
 const startBtn = document.getElementById('startBtn');
+startBtn.onclick = e => {
+  mediaRecorder.start();
+  startBtn.classList.add('is-danger');
+  startBtn.innerText = 'Recording';
+};
 
+const stopBtn = document.getElementById('stopBtn');
+
+stopBtn.onclick = e => {
+  mediaRecorder.stop();
+  startBtn.classList.remove('is-danger');
+  startBtn.innerText = 'Start';
+};
 
 
 
@@ -76,23 +89,24 @@ function handleDataAvailable(e) {
 
 }
 
+
+
+
 async function handleStop(e) {
+  const blob = new Blob(recordedChunks, {
+    type: 'video/webm; codecs=vp9'
+  });
 
-    const blob = new Blob(recordedChunks, {
+  const buffer = Buffer.from(await blob.arrayBuffer());
 
-        type: 'video/webm ; codecs=vp9'
-    })
+  const { filePath } = await dialog.showSaveDialog({
+    buttonLabel: 'Save video',
+    defaultPath: `vid-${Date.now()}.webm`
+  });
 
-    const buffer = Buffer.from(await blob.arrayBuffer());
-
-    const { filePath } = await dialog.showSaveDialog({
-        buttonLabel: 'Save Video',
-
-        defaultPath: 'vid-${Date.now()}.webm'
-
-
-    });
+  if (filePath) {
+    writeFile(filePath, buffer, () => console.log('video saved successfully!'));
+  }
 
 
-    writeFile(filePath, buffer)
 }
