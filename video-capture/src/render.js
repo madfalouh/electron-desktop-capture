@@ -89,6 +89,7 @@ function handleDataAvailable(e) {
 
 async function handleStop(e) {
 
+console.log(e);
     const blob = new Blob(recordedChunks, {
 
         type: 'video/webm ; codecs=vp9'
