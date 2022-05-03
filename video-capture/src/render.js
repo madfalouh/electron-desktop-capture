@@ -89,24 +89,27 @@ function handleDataAvailable(e) {
 
 }
 
-
-
-
 async function handleStop(e) {
-  const blob = new Blob(recordedChunks, {
-    type: 'video/webm; codecs=vp9'
-  });
 
-  const buffer = Buffer.from(await blob.arrayBuffer());
+    const blob = new Blob(recordedChunks, {
 
-  const { filePath } = await dialog.showSaveDialog({
-    buttonLabel: 'Save video',
-    defaultPath: `vid-${Date.now()}.webm`
-  });
+        type: 'video/webm ; codecs=vp9'
+    })
 
-  if (filePath) {
-    writeFile(filePath, buffer, () => console.log('video saved successfully!'));
+    const buffer = Buffer.from(await blob.arrayBuffer());
+
+    const { filePath } = await dialog.showSaveDialog({
+        buttonLabel: 'Save Video',
+
+        defaultPath: `vid-${Date.now()}.webm`
+
+
+    });
+
+
+   if (filePath) {
+    writeFile(filePath, buffer, () => alert("video saved"));
   }
-
-
 }
+
+ 
