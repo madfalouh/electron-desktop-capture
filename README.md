@@ -1,5 +1,5 @@
 # electron-desktop-capture
-this desktop app record your selected source 
+This desktop app records your selected source 
 
 
 # instalation 
